@@ -877,14 +877,13 @@ function showStats(){
 
   // 题库表现：bank1 vs bank2
   var b1QIds = {}, b2QIds = {};
+  var bank1Total = 0, bank2Total = 0;
   for(var i=0;i<allQuestions.length;i++){
-    if(allQuestions[i].bank === 1) b1QIds[allQuestions[i].id]=true;
-    else b2QIds[allQuestions[i].id]=true;
+    if(allQuestions[i].bank === 1) { b1QIds[allQuestions[i].id]=true; bank1Total++; }
+    else { b2QIds[allQuestions[i].id]=true; bank2Total++; }
   }
   var b1Correct = 0, b1Done = 0, b2Correct = 0, b2Done = 0;
   var scCorrect = 0, scDone = 0, mcCorrect = 0, mcDone = 0;
-  var bank1Total = Object.keys(b1QIds).length;
-  var bank2Total = Object.keys(b2QIds).length;
   for(var k in weights){
     var w = weights[k];
     if(!w) continue;
