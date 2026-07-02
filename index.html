@@ -611,14 +611,20 @@ function selectOption(letter){
 }
 
 function updateProgress(){
-  var answered = Object.keys(examAnswers).length;
+  var answered = Object.keys(examAnswers).filter(function(k){
+    var ans = examAnswers[k];
+    return Array.isArray(ans) ? ans.length > 0 : true;
+  }).length;
   document.getElementById('progressFill').style.width = (answered/examQuestions.length*100)+'%';
   document.getElementById('progressText').textContent = answered+'/'+examQuestions.length;
 }
 
 // ========== 交卷确认 ==========
 function confirmSubmit(){
-  var answered = Object.keys(examAnswers).length;
+  var answered = Object.keys(examAnswers).filter(function(k){
+    var ans = examAnswers[k];
+    return Array.isArray(ans) ? ans.length > 0 : true;
+  }).length;
   var total = examQuestions.length;
   if(answered < total){
     document.getElementById('confirmMsg').textContent = '你还有'+(total-answered)+'道题未作答，确定要提交吗？';
@@ -671,7 +677,7 @@ function submitExam(){
       }
       wrongList.push({
         question: q,
-        userAns: userAns || '未作答',
+        userAns: (Array.isArray(userAns) ? (userAns.length ? userAns.join(',') : '未作答') : (userAns || '未作答')),
         rightAns: rightAns,
         index: i
       });
